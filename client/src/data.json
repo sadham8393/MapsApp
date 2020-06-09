@@ -1,0 +1,38 @@
+[
+    {
+        "latitude": 47.49855629475769,
+        "longitude": -122.14184416996333,
+        "name": "Loc 1",
+        "id": 1
+    },
+    {
+        "latitude": 47.359423,
+        "longitude": -122.021071,
+        "name": "Loc 2",
+        "id": 2
+    },
+    {
+        "latitude": 47.2052192687988,
+        "longitude": -121.988426208496,
+        "name": "Loc 3",
+        "id": 3
+    },
+    {
+        "latitude": 47.6307081,
+        "longitude": -122.1434325,
+        "name": "Loc 4",
+        "id": 4
+    },
+    {
+        "latitude": 47.3084488,
+        "longitude": -122.2140121,
+        "name": "Loc 5",
+        "id": 5
+    },
+    {
+        "latitude": 47.5524695,
+        "longitude": -122.0425407,
+        "name": "Loc 6",
+        "id": 6
+    }
+]

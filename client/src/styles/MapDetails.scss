@@ -1,0 +1,71 @@
+.details-div {
+    text-align: center;
+    .card,
+    .table {
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    table,
+    tr,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    thead {
+        background: #5D6D7E;
+        color: #f2f3f4
+    }
+
+    .card-body {
+        padding: 10px;
+        background: #BBCEE3;
+    }
+    .card-title {
+        font-size: 25px;
+        color: #04135e;
+    }
+    .card-subtitle {
+        font-size: small;
+        color: #641E16;
+    }
+
+    button {
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    .active-btn {
+        color: #fff;
+        background-color: #046117;
+        border-color: #046117;
+        box-shadow: none;
+    }
+
+    .btn-secondary:not(:disabled):not(.disabled).active:focus, .btn-secondary:not(:disabled):not(.disabled):active:focus, .show>.btn-secondary.dropdown-toggle:focus {
+        box-shadow: none !important;
+    }
+
+    .btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+        color: #fff;
+        background-color: #046117;
+        border-color: #046117;
+        box-shadow: none;
+    }
+}
+
+.details-container {
+    .card-container {
+        overflow-y: auto;
+        max-height: 600px;
+    }
+
+    .row {
+        margin: 10px;
+    }
+    .btn {
+        margin: 10px;
+    }
+}
