@@ -34,7 +34,7 @@ const Home = () => {
     }
 
     const editClick = (loc, editMode) => {
-        setLocation(loc);
+        setLocation({...loc, new:false});
         setModalOpen(true);
         //To do delete dispatch
     }
