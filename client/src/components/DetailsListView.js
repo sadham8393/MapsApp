@@ -1,31 +1,28 @@
 import React from 'react';
-import { CardGroup, Card, CardBody, CardTitle, CardSubtitle, Button, Col } from 'reactstrap';
+import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
 
-
-const DetailsListView = ({ locationList }) => {
+const DetailsListView = ({ locationList = [], deleteConfirm, editClick }) => {
     return (
-
-        <CardGroup>
+        <MDBCardGroup>
             {
                 locationList.map((location, index) => {
-                    /* const delClick = this.deleteConfirmation.bind(this, location),
-                        editClick = this.editLocation.bind(this, location); */
                     return (
-                        <Col key={index} xs={12} sm={6} md={4} lg={4}>
-                            <Card>
-                                <CardBody>
-                                    <CardTitle>{location.name}</CardTitle>
-                                    <CardSubtitle><b>Latitude :</b> {location.latitude}</CardSubtitle>
-                                    <CardSubtitle><b>Longtitude :</b> {location.longitude}</CardSubtitle>
-                                </CardBody>
-                            </Card>
-                        </Col>
+                        <MDBCol key={index} xs="12" sm="6" md="4" lg="3">
+                            <MDBCard>
+                                <MDBCardBody>
+                                    <MDBCardTitle>{location.area}</MDBCardTitle>
+                                    <MDBCardText><b>Latitude :</b> {location.latitude}</MDBCardText>
+                                    <MDBCardText><b>Longtitude :</b> {location.longitude}</MDBCardText>
+                                    <MDBBtn color="primary" onClick={(e) => editClick(location)}>Edit</MDBBtn>
+                                    <MDBBtn color="danger" onClick={(e) => deleteConfirm(location)}>Delete</MDBBtn>
+                                </MDBCardBody>
+                            </MDBCard>
+                        </MDBCol>
                     )
 
                 })
             }
-        </CardGroup>
-
+        </MDBCardGroup>
     )
 }
 

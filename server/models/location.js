@@ -4,15 +4,19 @@ const Schema = mongoose.Schema;
 const locationSchema = new Schema({
     latitude: {
         type: Number,
-        required: true
+        required: [true, 'Latitude field is required']
     },
     longitude: {
         type: Number,
-        required: true
+        required: [true, 'Longitude field is required']
     },
     area: {
-        type: String
+        type: String,
+        required: [true, 'Area field is required']
     }
+}, {
+    collection: 'location',
+    timestamps: true
 });
 
-module.exports = mongoose.model("Location", locationSchema, "location");
+module.exports = mongoose.model("Location", locationSchema);

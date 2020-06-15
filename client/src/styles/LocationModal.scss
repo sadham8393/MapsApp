@@ -1,0 +1,20 @@
+.location-modal-form {
+    padding: 10px;
+    .row {
+        text-align: left;
+        margin-top: 10px;
+    }
+    
+}
+.modal-content{
+    .close:not(:disabled):not(.disabled):focus,
+    .close:not(:disabled):not(.disabled):hover {
+        opacity: 0.75;
+        outline: none;
+    }
+    .close {
+        span {
+            outline: none;
+        }
+    }
+}

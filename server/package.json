@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npx nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "npx nodemon index.js",
+    "client": "cd ../client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev:debug": "concurrently \"npm run debug\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "nodemon --inspect ./index.js"
   },
   "author": "",
   "license": "ISC",

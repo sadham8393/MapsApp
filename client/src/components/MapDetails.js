@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { ButtonToggle } from 'reactstrap';
-import locationList from '../data.json';
 import DetailsListView from './DetailsListView';
 import DetailsTableView from './DetailsTableView';
-import { Route, useHistory, Switch } from "react-router-dom";
+import { Route, useHistory, Switch, NavLink } from "react-router-dom";
+import { useSelector, shallowEqual } from 'react-redux';
+import { MDBIcon, MDBTooltip, MDBBtn } from 'mdbreact';
+import _ from 'lodash'
 
-
-const MapDetails = () => {
+const MapDetails = (props) => {
+    const locationList = useSelector(state => state.location.location, shallowEqual);
 
     let history = useHistory();
 
     const [activeBtn, setActiveBtn] = useState("listView");
+    const [deleteBtnDisbled, setDeleteBtnDisabled] = useState(true);
+    const [multiLocation, setMultiLocation] = useState([]);
 
     useEffect(() => {
         const pathnameSplit = history.location.pathname.split("/");
@@ -18,30 +21,63 @@ const MapDetails = () => {
         setActiveBtn(pathName === "details" ? "listView" : pathName);
     }, [history.location.pathname]);
 
-    const buttonClick = (viewType) => {
-        setActiveBtn(viewType);
-        history.push(`/details/${viewType}`);
+    const multiDelete =(locationArr) =>{
+        const length = locationArr.length;
+        setDeleteBtnDisabled(!(length > 0));
+        setMultiLocation(locationArr);
     }
+
+    const deleteLocationList = () =>{
+        const areaArr = _.map(multiLocation, 'area');
+        props.deleteConfirm(areaArr);
+        //setMultiLocation([]);
+    } 
+
     return (
         <div className="details-div">
-            <div>
-                <ButtonToggle className={activeBtn === "listView" ? "active-btn" : ""} onClick={(e) => buttonClick("listView")}>List View</ButtonToggle>
-                <ButtonToggle className={activeBtn === "tableView" ? "active-btn" : ""} onClick={(e) => buttonClick("tableView")}>Table View</ButtonToggle>
-            </div>
+            {
+                locationList.length > 0
+                &&
+                <div>
+                    <ul className="list-table-view-link">
+                        <li className="nav-item">
+                            <MDBTooltip material placement="top">
+                                <NavLink exact to="/details/listView" className={activeBtn === "listView" ? "active-btn" : ""}>
+                                    <MDBIcon className="icon-font" icon="th-list" />
+                                </NavLink>
+                                <div>List View</div>
+                            </MDBTooltip>
+                        </li>
+                        <li className="nav-item">
+                            <MDBTooltip material placement="top">
+                                <NavLink to="/details/tableView" className={activeBtn === "tableView" ? "active-btn" : ""}>
+                                    <MDBIcon className="icon-font" icon="table" />
+                                </NavLink>
+                                <div>Table View</div>
+                            </MDBTooltip>
+                        </li>
+                    </ul>
+                    <div className="multi-delete-form">
+                        <MDBBtn color="danger" disabled={deleteBtnDisbled} onClick={() => deleteLocationList()}>
+                            Delete
+                        </MDBBtn>
+                    </div>
+                </div>
+            }
+
 
             <Switch>
                 <Route exact path="/details" render={
-                    () => (<DetailsListView locationList={locationList} />)
-                } />/>
+                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm} editClick={props.editClick} />)
+                } />
                 <Route path="/details/listView" render={
-                    () => (<DetailsListView locationList={locationList} />)
-                } />/>
+                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm} editClick={props.editClick} />)
+                } />
                 <Route path="/details/tableView" render={
-                    () => (<DetailsTableView locationList={locationList} />)
-                } />/>
+                    () => (<DetailsTableView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                        editClick={props.editClick} multiDelete={multiDelete} />)
+                } />
             </Switch>
-
-            {/* <DetailsListView index={index} locationList={locationList} /> */}
         </div>
     );
 }
