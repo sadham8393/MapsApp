@@ -5,6 +5,14 @@
         color: #5d6d7e;
     }
 
+    .card-selectAll-div{
+        text-align: start;
+        label {
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    }
+
     .form-container {
         text-align: end;
         .collapse-form {
@@ -72,6 +80,7 @@
             display: block;
             padding: 0;
         }
+        
     }
 
     table,
@@ -92,6 +101,9 @@
         .btn:focus {
             outline: 0;
             box-shadow: none;
+        }
+        .card-checkbox-div{
+            text-align: end;
         }
     }
     .card-title {

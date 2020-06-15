@@ -21,17 +21,17 @@ const MapDetails = (props) => {
         setActiveBtn(pathName === "details" ? "listView" : pathName);
     }, [history.location.pathname]);
 
-    const multiDelete =(locationArr) =>{
+    const multiDelete = (locationArr) => {
         const length = locationArr.length;
         setDeleteBtnDisabled(!(length > 0));
         setMultiLocation(locationArr);
     }
 
-    const deleteLocationList = () =>{
+    const deleteLocationList = () => {
         const areaArr = _.map(multiLocation, 'area');
         props.deleteConfirm(areaArr);
         //setMultiLocation([]);
-    } 
+    }
 
     return (
         <div className="details-div">
@@ -68,10 +68,12 @@ const MapDetails = (props) => {
 
             <Switch>
                 <Route exact path="/details" render={
-                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm} editClick={props.editClick} />)
+                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                        editClick={props.editClick} multiDelete={multiDelete} />)
                 } />
                 <Route path="/details/listView" render={
-                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm} editClick={props.editClick} />)
+                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                        editClick={props.editClick} multiDelete={multiDelete} />)
                 } />
                 <Route path="/details/tableView" render={
                     () => (<DetailsTableView locationList={locationList} deleteConfirm={props.deleteConfirm}
