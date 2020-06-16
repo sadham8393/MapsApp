@@ -36,7 +36,7 @@ const MapDetails = (props) => {
     return (
         <div className="details-div">
             {
-                locationList.length > 0
+                locationList && locationList.length > 0
                 &&
                 <div>
                     <ul className="list-table-view-link">

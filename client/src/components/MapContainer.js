@@ -18,7 +18,7 @@ const MapContainer = (props) => {
 
     let displayMarkers = (props) => {
         window.google = props.google;
-        return locationList.map((item) => {
+        return (locationList || []).map((item) => {
             return (
                 <Marker key={item._id} id={`marker-${item._id}`} onClick={onMarkerClick} position={{
                     lat: item.latitude,

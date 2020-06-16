@@ -5,16 +5,17 @@
   "main": "index.js",
   "engines": {
     "node": "14.4.0",
-    "npm":"6.14.5"
+    "npm": "6.14.5"
   },
   "scripts": {
-    "server": "npx nodemon index.js",
-    "client": "cd ../client && npm start",
+    "start": "node server/index.js",
+    "server": "npx nodemon server/index.js",
+    "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "dev:debug": "concurrently \"npm run debug\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "nodemon --inspect ./index.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false (cd ../client && npm install) && (cd ../client && npm run build) "
+    "debug": "nodemon --inspect server/index.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false  cd client && npm install && npm run build "
   },
   "author": "",
   "license": "ISC",
@@ -26,6 +27,7 @@
     "mongoose": "^5.9.18"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "nodemon": "^2.0.4"
   }
 }
