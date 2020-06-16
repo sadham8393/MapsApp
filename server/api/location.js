@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const Location = require('../models/Location');
+const Location = require('../models/location');
 var ObjectID = require('mongoose').Types.ObjectId
 
 router.get('/location', (req, res) => {

@@ -38,11 +38,10 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
                 <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
                 <label htmlFor="defaultUnchecked">Select All</label>
                 <div className="sort-div">
-                    <select >
-                        <option>Choose your option</option>
-                        <option value="1">Option 1</option>
-                        <option value="2">Option 2</option>
-                        <option value="3">Option 3</option>
+                    <label htmlFor="sortBy">Sory By</label>
+                    <select id="sortBy">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
                     </select>
                 </div>
             </div>
