@@ -28,12 +28,11 @@ app.use((err, req, res, next) => {
   next();
 });
 
-if(process.env.NODE_ENV === "prodeuction"){
-  // ... other app.use middleware 
+if(process.env.NODE_ENV === "production"){
+  // Exprees will serve up production assets
   app.use(express.static(path.join(__dirname, "client", "build")));
   
-  //...
-  //Right before your app.listen(), add this:
+  // Express serve up index.html file if it doesn't recognize route
   app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });

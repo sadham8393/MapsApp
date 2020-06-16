@@ -32,6 +32,11 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
         multiDelete(selectedLocation);
     }
 
+    const sortChange = (e) => {
+        let sortType = e.target.value;
+        //debugger;
+    }
+
     return (
         <div>
             <div className="card-selectAll-div custom-control custom-checkbox">
@@ -39,7 +44,7 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
                 <label htmlFor="defaultUnchecked">Select All</label>
                 <div className="sort-div">
                     <label htmlFor="sortBy">Sory By</label>
-                    <select id="sortBy">
+                    <select id="sortBy" onChange={sortChange}>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
