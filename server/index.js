@@ -25,18 +25,20 @@ app.use('/api', locationApi);
 
 
 app.use((err, req, res, next) => {
-  console.log(err);
   next();
 });
 
-// ... other app.use middleware 
-//app.use(express.static(path.join(__dirname, "../client", "build")));
+if(process.env.NODE_ENV === "prodeuction"){
+  // ... other app.use middleware 
+  app.use(express.static(path.join(__dirname, "../client", "build")));
+  
+  //...
+  //Right before your app.listen(), add this:
+  app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+  });
 
-// ...
-// Right before your app.listen(), add this:
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
-// });
+}
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`)
