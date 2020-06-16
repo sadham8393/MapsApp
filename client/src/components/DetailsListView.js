@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
 
 const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
-   
+
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
 
@@ -37,6 +37,14 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
             <div className="card-selectAll-div custom-control custom-checkbox">
                 <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
                 <label htmlFor="defaultUnchecked">Select All</label>
+                <div className="sort-div">
+                    <select >
+                        <option>Choose your option</option>
+                        <option value="1">Option 1</option>
+                        <option value="2">Option 2</option>
+                        <option value="3">Option 3</option>
+                    </select>
+                </div>
             </div>
             <MDBCardGroup>
                 {
