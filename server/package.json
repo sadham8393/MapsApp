@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.4.0",
+    "npm":"6.14.5"
+  },
   "scripts": {
     "server": "npx nodemon index.js",
     "client": "cd ../client && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "dev:debug": "concurrently \"npm run debug\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "nodemon --inspect ./index.js"
+    "debug": "nodemon --inspect ./index.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false (cd ../client && npm install) && (cd ../client && npm run build) "
   },
   "author": "",
   "license": "ISC",
