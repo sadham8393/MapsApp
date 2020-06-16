@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
 
 const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
 
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
+    let [location, setLocation] = useState([]);
+
+    useEffect(() => {
+        if (locationList.length > 0) {
+            setLocation(locationList);
+        }
+    }, [locationList])
 
     const checkBoxClick = (event, location, locationList) => {
         selectedLocation = selectedLocation.filter(obj => obj._id !== location._id);
@@ -52,19 +59,19 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
             </div>
             <MDBCardGroup>
                 {
-                    locationList.map((location, index) => {
+                    location.map((item, index) => {
                         return (
                             <MDBCol key={index} xs="12" sm="6" md="4" lg="3">
                                 <MDBCard>
                                     <MDBCardBody>
                                         <div className="card-checkbox-div">
-                                            <input type="checkbox" checked={allChecked ? allChecked : location.checked ? location.checked : false} onChange={(e) => checkBoxClick(e, location, locationList)} />
+                                            <input type="checkbox" checked={allChecked ? allChecked : item.checked ? item.checked : false} onChange={(e) => checkBoxClick(e, item, locationList)} />
                                         </div>
-                                        <MDBCardTitle>{location.area}</MDBCardTitle>
-                                        <MDBCardText><b>Latitude :</b> {location.latitude}</MDBCardText>
-                                        <MDBCardText><b>Longtitude :</b> {location.longitude}</MDBCardText>
-                                        <MDBBtn color="primary" onClick={(e) => editClick(location)}>Edit</MDBBtn>
-                                        <MDBBtn color="danger" onClick={(e) => deleteConfirm(location)}>Delete</MDBBtn>
+                                        <MDBCardTitle>{item.area}</MDBCardTitle>
+                                        <MDBCardText><b>Latitude :</b> {item.latitude}</MDBCardText>
+                                        <MDBCardText><b>Longtitude :</b> {item.longitude}</MDBCardText>
+                                        <MDBBtn color="primary" onClick={(e) => editClick(item)}>Edit</MDBBtn>
+                                        <MDBBtn color="danger" onClick={(e) => deleteConfirm(item)}>Delete</MDBBtn>
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>
