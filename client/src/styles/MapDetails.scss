@@ -7,12 +7,16 @@
 
     .card-selectAll-div{
         text-align: start;
+        margin-top: 10px;
         label {
             font-weight: 600;
             margin-left: 10px;
+            margin-right: 10px;
         }
         .sort-div {
             text-align: end;
+            float: right;
+            margin-right: 10px;
         }
     }
 

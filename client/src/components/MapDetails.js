@@ -30,14 +30,12 @@ const MapDetails = (props) => {
     const deleteLocationList = () => {
         const areaArr = _.map(multiLocation, 'area');
         props.deleteConfirm(areaArr);
-        //setMultiLocation([]);
     }
 
     return (
         <div className="details-div">
             {
-                locationList && locationList.length > 0
-                &&
+                locationList  && locationList.length > 0 &&
                 <div>
                     <ul className="list-table-view-link">
                         <li className="nav-item">
@@ -62,24 +60,22 @@ const MapDetails = (props) => {
                             Delete
                         </MDBBtn>
                     </div>
+                    <Switch>
+                        <Route exact path="/details" render={
+                            () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                                editClick={props.editClick} multiDelete={multiDelete} />)
+                        } />
+                        <Route path="/details/listView" render={
+                            () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                                editClick={props.editClick} multiDelete={multiDelete} />)
+                        } />
+                        <Route path="/details/tableView" render={
+                            () => (<DetailsTableView locationList={locationList} deleteConfirm={props.deleteConfirm}
+                                editClick={props.editClick} multiDelete={multiDelete} />)
+                        } />
+                    </Switch>
                 </div>
             }
-
-
-            <Switch>
-                <Route exact path="/details" render={
-                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
-                        editClick={props.editClick} multiDelete={multiDelete} />)
-                } />
-                <Route path="/details/listView" render={
-                    () => (<DetailsListView locationList={locationList} deleteConfirm={props.deleteConfirm}
-                        editClick={props.editClick} multiDelete={multiDelete} />)
-                } />
-                <Route path="/details/tableView" render={
-                    () => (<DetailsTableView locationList={locationList} deleteConfirm={props.deleteConfirm}
-                        editClick={props.editClick} multiDelete={multiDelete} />)
-                } />
-            </Switch>
         </div>
     );
 }

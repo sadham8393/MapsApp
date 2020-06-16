@@ -1,62 +1,74 @@
 import React, { useState, useEffect } from 'react';
 import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
+import _ from 'lodash';
+import { singleCheckClick, checkboxAllClick, sortBy } from '../utils/utilities';
 
 const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
 
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
     let [location, setLocation] = useState([]);
+    let [sort, setSort] = useState("default");
 
     useEffect(() => {
         if (locationList.length > 0) {
             setLocation(locationList);
         }
-    }, [locationList])
+    }, [locationList]);
 
+    useEffect(() => {
+        if (sort && locationList && locationList.length > 0) {
+            const sortedList = sortBy(sort, locationList, "area");
+            setLocation(sortedList);
+        }
+    }, [sort, locationList]);
+
+    /**
+     * 
+     * @param {checkBoxClick} event 
+     * @param {single location object} location 
+     * @param {total location list} locationList 
+     * 
+     * utility will be called
+     */
     const checkBoxClick = (event, location, locationList) => {
-        selectedLocation = selectedLocation.filter(obj => obj._id !== location._id);
-        const checked = event.currentTarget.checked || false;
-        location.checked = checked;
-        if (checked) {
-            selectedLocation.push(location);
-        }/*  else {
-            setAllChecked(false);
-        } */
-        setAllChecked(selectedLocation.length === locationList.length);
-        setSelectedLocation(selectedLocation);
-        multiDelete(selectedLocation);
+        singleCheckClick(event, location, locationList, selectedLocation, setAllChecked, setSelectedLocation, multiDelete);
     }
 
+    /**
+     * 
+     * @param {allCheckedChangeHandler} event 
+     * @param {total location list} locationList 
+     * 
+     * utility will be called
+     */
     const allCheckedChangeHandler = (event, locationList) => {
-        const checked = event.currentTarget.checked || false;
-        selectedLocation = locationList.map(obj => {
-            obj.checked = checked;
-            return obj;
-        });
-        selectedLocation = checked ? selectedLocation : [];
-        setAllChecked(checked);
-        setSelectedLocation(selectedLocation);
-        multiDelete(selectedLocation);
+        checkboxAllClick(event, selectedLocation, locationList, setAllChecked, setSelectedLocation, multiDelete);
     }
 
     const sortChange = (e) => {
-        let sortType = e.target.value;
-        //debugger;
+        setSort(e.target.value);
     }
 
     return (
         <div>
-            <div className="card-selectAll-div custom-control custom-checkbox">
-                <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
-                <label htmlFor="defaultUnchecked">Select All</label>
-                <div className="sort-div">
-                    <label htmlFor="sortBy">Sory By</label>
-                    <select id="sortBy" onChange={sortChange}>
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
+            {
+                location.length > 0 &&
+                <div className="card-selectAll-div custom-control custom-checkbox">
+                    <div className="sort-div">
+                        <label htmlFor="sortBy">Sory By</label>
+                        <select id="sortBy" onChange={sortChange}>
+                            <option value="default">Default</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                    <div className="checkbox-div">
+                        <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
+                        <label htmlFor="defaultUnchecked">Select All</label>
+                    </div>
                 </div>
-            </div>
+            }
             <MDBCardGroup>
                 {
                     location.map((item, index) => {

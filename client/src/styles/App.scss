@@ -80,3 +80,7 @@
   border-left-color: transparent;
   padding: 10px;
 }
+
+select:focus {
+  outline: none;
+}

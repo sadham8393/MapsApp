@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
 import { MDBDataTable, MDBInput } from 'mdbreact';
+import { singleCheckClick, checkboxAllClick } from '../utils/utilities';
 
 const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
 
+    /**
+     * 
+     * @param {checkBoxClick} event 
+     * @param {single location object} location 
+     * @param {total location list} locationList 
+     * 
+     * utility will be called
+     */
     const checkBoxClick = (event, location, locationList) => {
-        selectedLocation = selectedLocation.filter(obj => obj._id !== location._id);
-        const checked = event.currentTarget.checked || false;
-        location.checked = checked;
-        if (checked) {
-            selectedLocation.push(location);
-        }/*  else {
-            setAllChecked(false);
-        } */
-        setAllChecked(selectedLocation.length === locationList.length);
-        setSelectedLocation(selectedLocation);
-        multiDelete(selectedLocation);
-
+        singleCheckClick(event, location, locationList, selectedLocation, setAllChecked, setSelectedLocation, multiDelete);
     }
 
+
+    /**
+     * 
+     * @param {allCheckedChangeHandler} event 
+     * @param {total location list} locationList 
+     * 
+     * utility will be called
+     */
     const allCheckedChangeHandler = (event, locationList) => {
-        const checked = event.currentTarget.checked || false;
-        selectedLocation = locationList.map(obj => {
-            obj.checked = checked;
-            return obj;
-        });
-        selectedLocation = checked ? selectedLocation : [];
-        setAllChecked(checked);
-        setSelectedLocation(selectedLocation);
-        multiDelete(selectedLocation);
+        checkboxAllClick(event, selectedLocation, locationList, setAllChecked, setSelectedLocation, multiDelete);
     }
 
     const data = {
