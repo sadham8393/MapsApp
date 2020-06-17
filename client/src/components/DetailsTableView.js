@@ -35,8 +35,13 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
             {
                 label: <MDBInput onChange={(e) => allCheckedChangeHandler(e, locationList)} checked={allChecked || false} label=" " type="checkbox" className="checkboxHeader" />,
                 field: 'check',
-                //sort: 'asc',
+                sort: 'disabled',
                 minimal: "sm"
+            },
+            {
+                label: 'Area',
+                field: 'area',
+                sort: 'asc'
             },
             {
                 label: 'Latitude',
@@ -48,11 +53,7 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
                 field: 'longitude',
                 sort: 'asc'
             },
-            {
-                label: 'Area',
-                field: 'area',
-                sort: 'asc'
-            },
+
             {
                 label: 'Created At',
                 field: 'createdAt',
@@ -64,18 +65,19 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
                 sort: 'asc'
             },
             {
-                label: 'Edit/delete',
-                field: 'edit'/* ,
-                sort: 'asc' */
+                label: 'Action',
+                field: 'edit',
+                minimal: "mx",
+                sort: 'disabled'
             }
         ],
         rows: locationList.map((location, index) => {
             return {
                 check: <MDBInput key={`check${index}`} label="" type="checkbox" checked={allChecked ? allChecked : location.checked ? location.checked : false}
                     onChange={(e) => checkBoxClick(e, location, locationList)} id={`checkbox${index}`} />,
+                area: location.area,
                 latitude: location.latitude,
                 longitude: location.longitude,
-                area: location.area,
                 createdAt: location.createdAt,
                 updatedAt: location.updatedAt,
                 edit: [
@@ -89,13 +91,14 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
     return (
 
         <MDBDataTable
-            exportToCSV
             striped
             bordered
             small
             noBottomColumns
             entries={10}
             entriesOptions={[10, 50, 100]}
+            entriesLabel="Show"
+            searchLabel="Filter"
             data={data}
         />
     );

@@ -5,7 +5,22 @@
         color: #5d6d7e;
     }
 
-    .card-selectAll-div{
+    .dataTables_wrapper {
+        .row {
+            margin-right: 0;
+            margin-left: 0;
+            div[data-test="datatable-table"] {
+                max-height: 55vh;
+                overflow-y: scroll;
+            }
+            div[data-test="datatable-info"] {
+                text-align: start;
+            }
+        }
+    }
+
+    .card-selectAll-div {
+        text-align: start;
         margin-top: 10px;
         display: flex;
         justify-content: space-between;
@@ -32,6 +47,7 @@
     .list-table-view-link {
         list-style-type: none;
         display: inline-flex;
+        align-self: flex-end;
         .nav-link {
             cursor: pointer;
         }
@@ -41,24 +57,41 @@
         }
     }
 
-    .multi-delete-form{
+    .multi-delete-form {
         text-align: end;
         background-color: #007bff0a;
+        display: flex;
+        justify-content: space-between;
     }
 
     .card,
     .table {
+        th,
+        td {
+            .form-check {
+                padding-left: 1.25rem;
+            }
+        }
         thead {
             background: #5d6d7e;
             color: #f2f3f4;
             text-align: center;
             .th-sm {
+                width: 40px;
+            }
+            .th-mx {
                 width: 50px;
+            }
+            th {
+                font-weight: 700;
             }
         }
         tbody {
             i {
                 cursor: pointer;
+            }
+            td {
+                font-weight: 500;
             }
         }
         margin-bottom: 10px;
@@ -88,15 +121,6 @@
             display: block;
             padding: 0;
         }
-        
-    }
-
-    table,
-    tr,
-    th,
-    td {
-        border: 1px solid black;
-        border-collapse: collapse;
     }
 
     .card-body {
@@ -110,13 +134,18 @@
             outline: 0;
             box-shadow: none;
         }
-        .card-checkbox-div{
+        .card-checkbox-div {
             text-align: end;
         }
     }
     .card-title {
         font-size: 25px;
         color: #04135e;
+    }
+
+    .card-group {
+        max-height: 60vh;
+        overflow-y: scroll;
     }
     .card-subtitle {
         font-size: small;
@@ -132,8 +161,8 @@
         border-bottom: 3px solid #16643f;
         text-decoration: none;
     }
-    
-    .list-table-view-link{
+
+    .list-table-view-link {
         .active-btn {
             border-bottom: 3px solid #16643f;
             text-decoration: none;

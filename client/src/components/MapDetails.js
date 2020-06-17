@@ -35,30 +35,31 @@ const MapDetails = (props) => {
     return (
         <div className="details-div">
             {
-                locationList  && locationList.length > 0 &&
+                locationList && locationList.length > 0 &&
                 <div>
-                    <ul className="list-table-view-link">
-                        <li className="nav-item">
-                            <MDBTooltip material placement="top">
-                                <NavLink exact to="/details/listView" className={activeBtn === "listView" ? "active-btn" : ""}>
-                                    <MDBIcon className="icon-font" icon="th-list" />
-                                </NavLink>
-                                <div>List View</div>
-                            </MDBTooltip>
-                        </li>
-                        <li className="nav-item">
-                            <MDBTooltip material placement="top">
-                                <NavLink to="/details/tableView" className={activeBtn === "tableView" ? "active-btn" : ""}>
-                                    <MDBIcon className="icon-font" icon="table" />
-                                </NavLink>
-                                <div>Table View</div>
-                            </MDBTooltip>
-                        </li>
-                    </ul>
                     <div className="multi-delete-form">
+                        <div></div>
+                        <ul className="list-table-view-link">
+                            <li className="nav-item">
+                                <MDBTooltip material placement="top">
+                                    <NavLink exact to="/details/listView" className={activeBtn === "listView" ? "active-btn" : ""}>
+                                        <MDBIcon className="icon-font" icon="th-list" />
+                                    </NavLink>
+                                    <div>List View</div>
+                                </MDBTooltip>
+                            </li>
+                            <li className="nav-item">
+                                <MDBTooltip material placement="top">
+                                    <NavLink to="/details/tableView" className={activeBtn === "tableView" ? "active-btn" : ""}>
+                                        <MDBIcon className="icon-font" icon="table" />
+                                    </NavLink>
+                                    <div>Table View</div>
+                                </MDBTooltip>
+                            </li>
+                        </ul>
                         <MDBBtn color="danger" disabled={deleteBtnDisbled} onClick={() => deleteLocationList()}>
                             Delete
-                        </MDBBtn>
+                            </MDBBtn>
                     </div>
                     <Switch>
                         <Route exact path="/details" render={
