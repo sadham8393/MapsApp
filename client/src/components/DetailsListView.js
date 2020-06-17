@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
-import _ from 'lodash';
 import { singleCheckClick, checkboxAllClick, sortBy } from '../utils/utilities';
 
 const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
@@ -55,6 +54,12 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
             {
                 location.length > 0 &&
                 <div className="card-selectAll-div custom-control custom-checkbox">
+
+                    <div className="checkbox-div">
+                        <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
+                        <label htmlFor="defaultUnchecked">Select All</label>
+                    </div>
+
                     <div className="sort-div">
                         <label htmlFor="sortBy">Sory By</label>
                         <select id="sortBy" onChange={sortChange}>
@@ -63,10 +68,7 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
                             <option value="desc">Descending</option>
                         </select>
                     </div>
-                    <div className="checkbox-div">
-                        <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
-                        <label htmlFor="defaultUnchecked">Select All</label>
-                    </div>
+
                 </div>
             }
             <MDBCardGroup>
