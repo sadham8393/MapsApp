@@ -80,10 +80,10 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
                 longitude: location.longitude,
                 createdAt: location.createdAt,
                 updatedAt: location.updatedAt,
-                edit: [
-                    <i key={`edit${index}`} onClick={() => editClick(location)} className="fa fa-edit mr-2 blue-text" aria-hidden="true"></i>,
+                edit: <div className="display-inline-flex">
+                    <i key={`edit${index}`} onClick={() => editClick(location)} className="fa fa-edit mr-2 blue-text" aria-hidden="true"></i>
                     <i key={`delete${index}`} onClick={() => deleteConfirm(location)} className="fa fa-trash-alt mr-2 red-text" aria-hidden="true"></i>
-                ]
+                </div>
             }
         })
     };

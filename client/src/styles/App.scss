@@ -14,7 +14,7 @@
 }
 
 .home-nav-container {
-  text-align: end;
+  text-align: right;
 }
 
 .display-block {
@@ -51,6 +51,10 @@
 
 .bg-dark {
   background-color: #1c1138 !important;
+}
+
+.display-inline-flex{
+  display: inline-flex;
 }
 
 .alert {
@@ -91,7 +95,7 @@ select:focus {
 
 body.modal-open {
   padding-right: 0 !important;
-  overflow-y: hidden !important;
+  overflow-y: visible;
 }
 
 /* Scrollbar css start  */
