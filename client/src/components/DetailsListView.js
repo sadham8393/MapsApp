@@ -75,22 +75,24 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
                 {
                     location.map((item, index) => {
                         return (
-                            <MDBCol key={index} xs="12" sm="6" md="4" lg="3">
+                            <MDBCol key={`card-${index}`} xs="12" sm="6" md="4" lg="3">
                                 <MDBCard>
                                     <MDBCardBody>
                                         <div className="card-checkbox-div">
                                             <input type="checkbox" checked={allChecked ? allChecked : item.checked ? item.checked : false} onChange={(e) => checkBoxClick(e, item, locationList)} />
+                                            <MDBCardTitle>{item.area}</MDBCardTitle>
+                                            <div></div>
                                         </div>
-                                        <MDBCardTitle>{item.area}</MDBCardTitle>
-                                        <MDBCardText><b>Latitude :</b> {item.latitude}</MDBCardText>
-                                        <MDBCardText><b>Longtitude :</b> {item.longitude}</MDBCardText>
+                                        <MDBCardText><strong>Latitude :</strong> {item.latitude}</MDBCardText>
+                                        <MDBCardText><strong>Longtitude :</strong> {item.longitude}</MDBCardText>
+                                        <MDBCardText><strong>City :</strong> {item.city}</MDBCardText>
+                                        <MDBCardText><strong>Country :</strong> {item.country}</MDBCardText>
                                         <MDBBtn color="primary" onClick={(e) => editClick(item)}>Edit</MDBBtn>
                                         <MDBBtn color="danger" onClick={(e) => deleteConfirm(item)}>Delete</MDBBtn>
                                     </MDBCardBody>
                                 </MDBCard>
                             </MDBCol>
                         )
-
                     })
                 }
             </MDBCardGroup>

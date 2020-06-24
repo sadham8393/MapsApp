@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo, useEffect } from 'react';
 import { MDBDataTable, MDBInput } from 'mdbreact';
 import { singleCheckClick, checkboxAllClick } from '../utils/utilities';
 
@@ -6,6 +6,9 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
 
+    useEffect(() => {
+        console.log("Useeffect");
+    })
     /**
      * 
      * @param {checkBoxClick} event 
@@ -16,7 +19,7 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
      */
     const checkBoxClick = (event, location, locationList) => {
         singleCheckClick(event, location, locationList, selectedLocation, setAllChecked, setSelectedLocation, multiDelete);
-    }
+    };
 
 
     /**
@@ -27,8 +30,8 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
      * utility will be called
      */
     const allCheckedChangeHandler = (event, locationList) => {
-        checkboxAllClick(event, selectedLocation, locationList, setAllChecked, setSelectedLocation, multiDelete);
-    }
+        checkboxAllClick(event, locationList, locationList, setAllChecked, setSelectedLocation, multiDelete);
+    };
 
     const data = {
         columns: [
@@ -55,13 +58,13 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
             },
 
             {
-                label: 'Created At',
-                field: 'createdAt',
+                label: 'City',
+                field: 'city',
                 sort: 'asc'
             },
             {
-                label: 'Updated At',
-                field: 'updatedAt',
+                label: 'Country',
+                field: 'country',
                 sort: 'asc'
             },
             {
@@ -73,13 +76,13 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
         ],
         rows: locationList.map((location, index) => {
             return {
-                check: <MDBInput key={`check${index}`} label="" type="checkbox" checked={allChecked ? allChecked : location.checked ? location.checked : false}
-                    onChange={(e) => checkBoxClick(e, location, locationList)} id={`checkbox${index}`} />,
+                check: <MDBInput key={`check${index}`} type="checkbox" checked={allChecked ? allChecked : location.checked ? location.checked : false}
+                    onChange={(e) => checkBoxClick(e, location, locationList)} />,
                 area: location.area,
                 latitude: location.latitude,
                 longitude: location.longitude,
-                createdAt: location.createdAt,
-                updatedAt: location.updatedAt,
+                city: location.city,
+                country: location.country,
                 edit: <div className="display-inline-flex">
                     <i key={`edit${index}`} onClick={() => editClick(location)} className="fa fa-edit mr-2 blue-text" aria-hidden="true"></i>
                     <i key={`delete${index}`} onClick={() => deleteConfirm(location)} className="fa fa-trash-alt mr-2 red-text" aria-hidden="true"></i>
@@ -104,4 +107,6 @@ const DetailsTableView = ({ locationList = [], deleteConfirm, editClick, multiDe
     );
 };
 
-export default DetailsTableView;
+export default memo(DetailsTableView, (prevState, nextState) => {
+   return JSON.stringify(prevState.locationList) !== JSON.stringify(nextState.locationList);
+});

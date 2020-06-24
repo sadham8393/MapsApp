@@ -17,4 +17,13 @@
             outline: none;
         }
     }
+
+    input[type="checkbox"] + label {
+        color: #ccc;
+        font-weight: 700;
+    }
+    input[type="checkbox"]:checked + label {
+        color: rgb(20, 56, 13) !important;
+        font-style: normal;
+    }
 }

@@ -1,5 +1,5 @@
 import {
-    FETCH_LOCATION, RESET_RESPONSE, ADD_LOCATION, DELETE_LOCATION, CUSTOM_INFO_MESSAGE, UPDATE_LOCATION, DELETE_MULTI_LOCATION
+    FETCH_LOCATION, RESET_RESPONSE, ADD_LOCATION, DELETE_LOCATION, CUSTOM_INFO_MESSAGE, UPDATE_LOCATION
 } from '../utils/constants';
 
 export const fetchLocation = () => ({
@@ -21,17 +21,10 @@ export const updateLocation = (location) => {
     }
 };
 
-export const deleteLocation = (id) => {
+export const deleteLocation = (location) => {
     return {
         type: DELETE_LOCATION,
-        id
-    }
-};
-
-export const deleteLocations = (locationObj) => {
-    return {
-        type: DELETE_MULTI_LOCATION,
-        locationObj
+        location
     }
 };
 

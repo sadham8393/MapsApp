@@ -1,7 +1,7 @@
 .details-div {
     text-align: center;
     .icon-font {
-        font-size: 30px;
+        font-size: 20px;
         color: #5d6d7e;
     }
 
@@ -10,7 +10,7 @@
             margin-right: 0;
             margin-left: 0;
             div[data-test="datatable-table"] {
-                max-height: 55vh;
+                max-height: 60vh;
                 overflow-y: scroll;
             }
             div[data-test="datatable-info"] {
@@ -34,13 +34,13 @@
             margin-right: 10px;
         }
 
-        input[type=checkbox] + label {
+        input[type="checkbox"] + label {
             color: #ccc;
-          } 
-          input[type=checkbox]:checked + label {
+        }
+        input[type="checkbox"]:checked + label {
             color: rgb(20, 56, 13);
             font-style: normal;
-          } 
+        }
     }
 
     .form-container {
@@ -56,12 +56,18 @@
         list-style-type: none;
         display: inline-flex;
         align-self: flex-end;
+        margin-bottom: 0;
         .nav-link {
             cursor: pointer;
         }
 
         .nav-link--active {
             border-bottom: 3px solid #16643f;
+        }
+
+        .active-btn {
+            border-bottom: 3px solid #16643f;
+            text-decoration: none;
         }
     }
 
@@ -81,17 +87,21 @@
             }
         }
         thead {
-            background: #5d6d7e;
-            color: #f2f3f4;
-            text-align: center;
             .th-sm {
-                width: 40px;
+                min-width: 3rem;
             }
             .th-mx {
                 width: 80px;
             }
             th {
+                background: #5d6d7e;
+                color: #f2f3f4;
+                text-align: center;
                 font-weight: 700;
+                position: -webkit-sticky !important;
+                position: sticky !important;
+                top: 0;
+                z-index: 2;
             }
         }
         tbody {
@@ -135,7 +145,7 @@
         padding: 10px;
         background: #bbcee3;
         .btn {
-            padding: 1px;
+            padding: 1px !important;
         }
         .btn.focus,
         .btn:focus {
@@ -143,16 +153,26 @@
             box-shadow: none;
         }
         .card-checkbox-div {
+            display: flex;
+            justify-content: space-between;
             text-align: left;
+        }
+
+        .card-text {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #747373;
+            margin-bottom: 0rem;
         }
     }
     .card-title {
-        font-size: 25px;
+        font-weight: 500 !important;
+        font-size: 15px;
         color: #04135e;
     }
 
     .card-group {
-        max-height: 60vh;
+        max-height: 70vh;
         overflow-y: scroll;
     }
     .card-subtitle {
@@ -168,13 +188,6 @@
     .active-btn {
         border-bottom: 3px solid #16643f;
         text-decoration: none;
-    }
-
-    .list-table-view-link {
-        .active-btn {
-            border-bottom: 3px solid #16643f;
-            text-decoration: none;
-        }
     }
 
     .btn-secondary:not(:disabled):not(.disabled).active:focus,

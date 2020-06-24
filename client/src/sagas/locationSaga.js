@@ -45,7 +45,7 @@ export function* updateLocation(action) {
 
 export function* deleteLocation(action) {
     try {
-        const payload = yield call(deleteLocationApi, action.id);
+        const payload = yield call(deleteLocationApi, action.location);
         yield put({ type: DELETE_LOCATION_SUCCESS, success: payload.message });
         yield fetchLocation();
     } catch (error) {

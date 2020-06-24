@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBCol } from 'mdbreact';
 import { isLatValid, isLngValid, isAreaValid } from '../utils/validation';
 import { MDBAlert } from 'mdbreact';
+import geocode from "./common/Geocode";
+import PlacesAutoComplete from "./common/PlacesAutocomplete";
 
 
 const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationList = [], locationObj = null }) => {
@@ -9,11 +11,15 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
     const [area, setArea] = useState(null);
+    const [city, setCity] = useState(null);
+    const [country, setCountry] = useState(null);
     const [editMode, setEditMode] = useState(false);
+    const [latLngChecked, setLatLngChecked] = useState(true);
     const [latValid, setLatValid] = useState(true);
     const [lngValid, setLngValid] = useState(true);
     const [areaValid, setAreaValid] = useState(true);
     const [btnDisabled, setBtnDisabled] = useState(true);
+    const [generateBtnDisabled, setGenerateBtnDisabled] = useState(true);
     const [latLngExists, setLatLngExists] = useState(null);
     const [nameExists, setNameExists] = useState(null);
 
@@ -39,8 +45,15 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
         let latValidated = isLatValid(latitude),
             lngValidated = isLngValid(longitude),
             areaValidated = isAreaValid(area);
-        setBtnDisabled(!(latValidated, lngValidated, areaValidated));
-    }, [latitude, longitude, area]);
+        setBtnDisabled(!(latValidated && lngValidated && areaValidated));
+
+        if (latLngChecked) {
+            setGenerateBtnDisabled(!(latValidated && lngValidated));
+        } else {
+            setGenerateBtnDisabled(true);
+        }
+
+    }, [latitude, longitude, area, latLngChecked]);
 
     const toggle = () => {
         resetState();
@@ -51,10 +64,13 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
         setLatitude(null);
         setLongitude(null);
         setArea(null);
+        setCity(null);
+        setCountry(null);
         setEditMode(false);
         setBtnDisabled(true);
         setLatLngExists(null);
         setNameExists(null);
+        setLatLngChecked(true);
     }
 
     const handleSave = () => {
@@ -64,14 +80,13 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
         if (isFormValid()) {
             if (editMode) {
                 const id = locationObj._id;
-                updateLoc({ id, latitude, longitude, area });
+                updateLoc({ id, latitude, longitude, area, city, country });
 
             } else {
-                addLoc({ latitude, longitude, area });
+                addLoc({ latitude, longitude, area, city, country });
             }
             toggle();
         }
-
     }
 
     const changeHandler = (event) => {
@@ -114,9 +129,37 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
         return exists;
     }
 
+    const handleGenerate = async () => {
+        if (latitude && longitude && latLngChecked) {
+            const location = { lat: latitude, long: longitude };
+            const place = await geocode.locate(location);
+            const { city, locality, countryName } = place;
+            setArea(locality);
+            setCity(city || "-");
+            setCountry(countryName || "-");
+        }
+    }
+
+    const handleLatLngChange = () => {
+        setLatLngChecked(!latLngChecked);
+    }
+
+    const handleAutoComplete = (suggestion) => {
+        const { lat, lng } = suggestion.latlng;
+        const { name, city, county, administrative } = suggestion;
+        setLatitude(lat);
+        setLongitude(lng);
+        setArea(name);
+        setCity(city || county || administrative);
+        setCountry(suggestion.country);
+    }
+
+
     return (
         <MDBContainer>
-            <MDBModal isOpen={modalOpen} centered>
+            <MDBModal isOpen={modalOpen} centered toggle={() => {
+                return;
+            }}>
                 <MDBModalHeader toggle={toggle}>{editMode ? `Edit ${locationObj && locationObj.area}` : "Add Location"}</MDBModalHeader>
                 {(nameExists || latLngExists) && <MDBAlert color="warning" onClose={resetAlert} dismiss>
                     {nameExists ? nameExists : latLngExists}
@@ -136,6 +179,7 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
                                     Latitude
                                 </label>
                                 <input
+                                    disabled={!latLngChecked}
                                     //onBlur={(e) => blurhandler(e)}
                                     value={latitude || ""}
                                     name="latitude"
@@ -155,6 +199,7 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
                                     Longitude
                                 </label>
                                 <input
+                                    disabled={!latLngChecked}
                                     //onBlur={(e) => blurhandler(e)}
                                     value={longitude || ""}
                                     name="longitude"
@@ -168,27 +213,87 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
                             </MDBCol>
                         </MDBRow>
                         <MDBRow>
+                            <MDBCol>
+                                <input type="checkbox" onChange={handleLatLngChange} checked={latLngChecked} />
+                                <label
+                                    htmlFor="longitudeText"
+                                    className="grey-text"
+                                >
+                                    Generate Area from Latitude and Longitude coordinates
+                                </label>
+                            </MDBCol>
+                        </MDBRow>
+
+                        <MDBRow>
                             <MDBCol md="12" className="mb-12">
                                 <label
                                     htmlFor="areaText"
                                     className="grey-text"
                                 >
-                                    Name
+                                    Area
                                 </label>
-                                <input
-                                    //onBlur={(e) => blurhandler(e)}
-                                    disabled={editMode || false}
-                                    value={area || ""}
-                                    name="area"
-                                    onChange={(e) => changeHandler(e)}
-                                    type="text"
-                                    id="areaText"
-                                    className={`form-control ${areaValid ? "" : "invalid"}`}
-                                    placeholder="Area"
-                                />
+                                {
+                                    latLngChecked ?
+                                        <input
+                                            disabled
+                                            value={area || ""}
+                                            name="area"
+                                            type="text"
+                                            id="areaText"
+                                            placeholder="Area"
+                                            className={`form-control`}
+                                        />
+                                        :
+                                        <PlacesAutoComplete handleAutoComplete={handleAutoComplete} />
+                                }
                                 <div className={`invalid-feedback ${areaValid ? "display-none" : "display-block"}`}>Enter valid name</div>
                             </MDBCol>
                         </MDBRow>
+
+
+                        <MDBRow>
+                            <MDBCol md="6" className="mb-6">
+                                <label
+                                    htmlFor="cityText"
+                                    className="grey-text"
+                                >
+                                    City
+                                </label>
+                                <input
+                                    disabled
+                                    value={city || ""}
+                                    name="city"
+                                    type="text"
+                                    id="cityText"
+                                    className={`form-control`}
+                                    placeholder="City"
+                                />
+                            </MDBCol>
+                            <MDBCol md="6" className="mb-6">
+                                <label
+                                    htmlFor="countryText"
+                                    className="grey-text"
+                                >
+                                    Country
+                                </label>
+                                <input
+                                    disabled
+                                    value={country || ""}
+                                    name="country"
+                                    type="text"
+                                    id="countryText"
+                                    className={`form-control`}
+                                    placeholder="Country"
+                                />
+                            </MDBCol>
+                        </MDBRow>
+
+                        <MDBRow>
+                            <MDBCol>
+                                <MDBBtn disabled={generateBtnDisabled} color="primary" onClick={handleGenerate}>Generate</MDBBtn>
+                            </MDBCol>
+                        </MDBRow>
+
                     </form>
                 </MDBModalBody>
                 <MDBModalFooter>

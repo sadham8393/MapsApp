@@ -25,6 +25,10 @@
   display: none !important;
 }
 
+.margin-r10 {
+  margin-right: 10px;
+}
+
 .invalid {
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);
@@ -37,6 +41,11 @@
   color: red;
 }
 
+.norecords-div {
+  color: blue;
+  font-weight: 600;
+}
+
 .btn.disabled,
 .btn:disabled {
   opacity: 0.5;
@@ -47,13 +56,14 @@
 
 .btn {
   font-weight: bold;
+  padding: 5px !important;
 }
 
 .bg-dark {
   background-color: #1c1138 !important;
 }
 
-.display-inline-flex{
+.display-inline-flex {
   display: inline-flex;
 }
 

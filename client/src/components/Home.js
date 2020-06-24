@@ -21,15 +21,16 @@ const Home = () => {
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
     const [deleteConfirmMsg, setDeleteConfirmMsg] = useState(null);
     const [location, setLocation] = useState(null);
+    const [deleteBtnDisabled, setDeleteBtnDisabled] = useState(true);
 
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchLocation());
     }, [dispatch]);
 
-    const addLoc = ({ latitude, longitude, area }) => {
+    const addLoc = ({ latitude, longitude, area, city, country }) => {
         dispatch(addLocation({
-            latitude, longitude, area
+            latitude, longitude, area, city, country
         }));
     }
 
@@ -40,18 +41,20 @@ const Home = () => {
     }
 
     const deleteLoc = (loc) => {
-        dispatch(deleteLocation(loc.area));
+        dispatch(deleteLocation(loc));
+        setDeleteBtnDisabled(!deleteBtnDisabled)
     }
 
     const updateLoc = (loc) => {
         dispatch(updateLocation(loc));
     }
 
-    const deleteConfirm = (loc) => {
+    const deleteConfirm = (loc, disabled=true) => {
+        setDeleteBtnDisabled(disabled);
         let msg;
-        if (loc instanceof Array) {
-            setLocation({ area: loc });
-            msg = loc.join(",");
+        if (loc.areaArr) {
+            setLocation(loc);
+            msg = loc.areaArr.join(",");
 
         } else {
             setLocation(loc)
@@ -100,7 +103,7 @@ const Home = () => {
             <Alert />
             <Switch>
                 <Route path="/details" render={
-                    () => (<MapDetails locationList={locationList} deleteConfirm={deleteConfirm} editClick={editClick} />)
+                    () => (<MapDetails locationList={locationList} deleteConfirm={deleteConfirm} editClick={editClick} deleteBtnDisabled={deleteBtnDisabled}/>)
                 } />
                 {/* <Route path="/details" component={MapDetails} /> */}
                 <Route exact={true} path="/" component={MapContainer} />

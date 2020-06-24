@@ -35,8 +35,8 @@ export function updateLocationApi(location) {
         });
 }
 
-export function deleteLocationApi(ids) {
-    return axios.delete(`${LOCATION_API_URL}/${ids}`)
+export function deleteLocationApi(location) {
+    return axios.delete(`${LOCATION_API_URL}/${JSON.stringify(location)}`)
         .then(response => {
             return response.data
         })

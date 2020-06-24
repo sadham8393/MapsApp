@@ -20,7 +20,7 @@ const AlertPage = () => {
     }, 10000);
   }
 
-  const color = error ? "danger" :  (success ? "success" : info ? "warning" : "");
+  const color = error ? "danger" :  (success ? "success" : info ? "primary" : "");
   if (error || success || info) {
     return (
       <MDBAlert color= {color} onClose={onClose} dismiss>
