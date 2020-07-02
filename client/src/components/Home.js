@@ -4,18 +4,18 @@ import MapDetails from './MapDetails';
 import { Route, NavLink, Switch } from "react-router-dom";
 import NotFound from './NotFound';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
-import { fetchLocation } from '../actions/locationAction';
 import Alert from './common/Alert';
 import Loader from './common/Loader';
 
 import { MDBBtn } from 'mdbreact';
 import LocationModal from './LocationModal';
 import ConfirmModal from './common/ConfirmModal';
-import { addLocation, deleteLocation, updateLocation } from '../actions/locationAction';
+import { fetchLocation, addLocation, deleteLocation, updateLocation } from '../actions/locationAction';
 
 
 const Home = () => {
     const locationList = useSelector(state => state.location.location, shallowEqual);
+    const loading = useSelector(state => state.location.isLoading, shallowEqual);
 
     const [modalOpen, setModalOpen] = useState(false);
     const [confirmModalOpen, setConfirmModalOpen] = useState(false);
@@ -35,7 +35,7 @@ const Home = () => {
     }
 
     const editClick = (loc, editMode) => {
-        setLocation({...loc, new:false});
+        setLocation({ ...loc, new: false });
         setModalOpen(true);
         //To do delete dispatch
     }
@@ -49,7 +49,7 @@ const Home = () => {
         dispatch(updateLocation(loc));
     }
 
-    const deleteConfirm = (loc, disabled=true) => {
+    const deleteConfirm = (loc, disabled = true) => {
         setDeleteBtnDisabled(disabled);
         let msg;
         if (loc.areaArr) {
@@ -99,16 +99,20 @@ const Home = () => {
             <ConfirmModal confirmModalToggle={confirmModalToggle} isModalOpen={confirmModalOpen}
                 confirmMsg={deleteConfirmMsg} confirm={deleteLoc} location={location} />
 
-            <Loader />
             <Alert />
-            <Switch>
-                <Route path="/details" render={
-                    () => (<MapDetails locationList={locationList} deleteConfirm={deleteConfirm} editClick={editClick} deleteBtnDisabled={deleteBtnDisabled}/>)
-                } />
-                {/* <Route path="/details" component={MapDetails} /> */}
-                <Route exact={true} path="/" component={MapContainer} />
-                <Route component={NotFound} />
-            </Switch>
+
+            {
+                loading ?
+                    <Loader />
+                    :
+                    <Switch>
+                        <Route path="/details" render={
+                            () => (<MapDetails deleteConfirm={deleteConfirm} editClick={editClick} deleteBtnDisabled={deleteBtnDisabled} />)
+                        } />
+                        <Route exact={true} path="/" component={MapContainer} />
+                        <Route component={NotFound} />
+                    </Switch>
+            }
         </div>
     );
 }

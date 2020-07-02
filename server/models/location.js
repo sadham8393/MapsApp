@@ -13,6 +13,12 @@ const locationSchema = new Schema({
     area: {
         type: String,
         required: [true, 'Area field is required']
+    },
+    city: {
+        type: String
+    },
+    country: {
+        type: String
     }
 }, {
     collection: 'location',

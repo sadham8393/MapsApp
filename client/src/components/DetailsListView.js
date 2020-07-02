@@ -1,26 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { MDBCol, MDBCard, MDBCardTitle, MDBBtn, MDBCardGroup, MDBCardText, MDBCardBody } from 'mdbreact';
 import { singleCheckClick, checkboxAllClick, sortBy } from '../utils/utilities';
+import { useSelector, shallowEqual } from 'react-redux';
+import Pagination from '../components/common/Pagination';
+import Search from '../components/common/Search';
 
-const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDelete }) => {
-
+const DetailsListView = ({ deleteConfirm, editClick, multiDelete }) => {
+    const locationList = useSelector(state => state.location.location, shallowEqual);
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
-    let [location, setLocation] = useState([]);
+
     let [sort, setSort] = useState("default");
+    const [itemsPerPage, setItemsPerPage] = useState(5);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [search, setSearch] = useState('');
+    const [totalCount, setTotalCount] = useState(0);
+    const [rangeFrom, setRangeFrom] = useState(0);
+    const [rangeTo, setRangeTo] = useState(0);
+
 
     useEffect(() => {
-        if (locationList.length > 0) {
-            setLocation(locationList);
+        if (locationList.length > 0 && itemsPerPage > 0) {
+            setTotalPages(Math.ceil(locationList.length / itemsPerPage));
         }
-    }, [locationList]);
+    }, [locationList, itemsPerPage]);
 
-    useEffect(() => {
-        if (sort && locationList && locationList.length > 0) {
-            const sortedList = sortBy(sort, locationList, "area");
-            setLocation(sortedList);
+    const locationData = useMemo(() => {
+        let computedData = locationList;
+
+        if (search) {
+            computedData = computedData.filter(
+                item =>
+                    item.area.toLowerCase().includes(search.toLowerCase()) ||
+                    item.city.toLowerCase().includes(search.toLowerCase()) ||
+                    item.country.toLowerCase().includes(search.toLowerCase())
+            );
         }
-    }, [sort, locationList]);
+
+        setTotalCount(computedData.length);
+        if (sort && computedData.length > 0) {
+            computedData = sortBy(sort, computedData, 'area');
+        }
+
+        //Current Page slice
+        setRangeFrom((currentPage - 1) * itemsPerPage + 1)
+        setRangeTo((currentPage - 1) * itemsPerPage + itemsPerPage)
+        return computedData.slice(
+            (currentPage - 1) * itemsPerPage,
+            (currentPage - 1) * itemsPerPage + itemsPerPage
+        );
+    }, [sort, locationList, currentPage, itemsPerPage, search]);
 
     /**
      * 
@@ -49,10 +79,29 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
         setSort(e.target.value);
     }
 
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    }
+
+    const showChange = (e) => {
+        setItemsPerPage(parseInt(e.target.value));
+        setCurrentPage(1);
+    }
+
     return (
         <div>
+            <Search
+                onSearch={value => {
+                    setSearch(value);
+                    setCurrentPage(1);
+                }}
+                rangeFrom={rangeFrom}
+                rangeTo={rangeTo}
+                total={totalCount}
+            />
             {
-                location.length > 0 &&
+                totalCount > 0 &&
+
                 <div className="card-selectAll-div custom-control custom-checkbox">
 
                     <div className="checkbox-div">
@@ -71,9 +120,10 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
 
                 </div>
             }
+
             <MDBCardGroup>
                 {
-                    location.map((item, index) => {
+                    locationData.map((item, index) => {
                         return (
                             <MDBCol key={`card-${index}`} xs="12" sm="6" md="4" lg="3">
                                 <MDBCard>
@@ -96,6 +146,24 @@ const DetailsListView = ({ locationList = [], deleteConfirm, editClick, multiDel
                     })
                 }
             </MDBCardGroup>
+            <div className="pagination-div">
+                {
+                    totalCount > 0 &&
+                    <>
+                        <select onChange={showChange} className="browser-default custom-select">
+                            {
+                                [5, 10, 50, 100].map(item => {
+                                    return <option key={`option-${item}`} value={item}>{item}</option>
+                                })
+                            }
+                        </select>
+                        {
+                            totalPages > 1 &&
+                            <Pagination totalCount={totalCount} itemsPerPage={itemsPerPage} currentPage={currentPage} handlePageChange={handlePageChange} />
+                        }
+                    </>
+                }
+            </div>
         </div>
 
     )

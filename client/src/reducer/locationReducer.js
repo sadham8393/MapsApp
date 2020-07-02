@@ -10,7 +10,8 @@ const initialState = {
     location: [],
     error: null,
     success: null,
-    info: null
+    info: null,
+    totalRecords: 0
 };
 
 export default function locationReducer(state = initialState, action) {
@@ -22,20 +23,23 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: true,
                 info: null,
                 error: null,
-                success: null
+                success: null,
+                totalRecords: 0
             });
         case FETCH_LOCATION_SUCCESS:
             return Object.assign({}, state, {
                 ...state,
                 isLoading: false,
-                location: action.location
+                location: action.location.results,
+                totalRecords: action.location.totalRecords
             });
         case FETCH_LOCATION_ERROR:
             return Object.assign({}, state, {
                 ...state,
                 isLoading: false,
                 location: [],
-                error: action.error
+                error: action.error,
+                totalRecords: 0
             });
         case ADD_LOCATION:
             return Object.assign({}, state, {
@@ -44,7 +48,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: true,
                 info: null,
                 error: null,
-                success: null
+                success: null,
+                totalRecords: 0
             });
         case ADD_LOCATION_SUCCESS:
             return Object.assign({}, state, {
@@ -52,7 +57,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: false,
                 success: action.success,
                 info: action.info || null,
-                error: null
+                error: null,
+                totalRecords: 0
             });
         case ADD_LOCATION_ERROR:
             return Object.assign({}, state, {
@@ -61,7 +67,8 @@ export default function locationReducer(state = initialState, action) {
                 location: [],
                 info: null,
                 success: null,
-                error: action.error
+                error: action.error,
+                totalRecords: 0
             });
         case UPDATE_LOCATION:
             return Object.assign({}, state, {
@@ -70,7 +77,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: true,
                 info: null,
                 error: null,
-                success: null
+                success: null,
+                totalRecords: 0
             });
         case UPDATE_LOCATION_SUCCESS:
             return Object.assign({}, state, {
@@ -78,7 +86,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: false,
                 success: action.success,
                 info: action.info || null,
-                error: null
+                error: null,
+                totalRecords: 0
             });
         case UPDATE_LOCATION_ERROR:
             return Object.assign({}, state, {
@@ -87,7 +96,8 @@ export default function locationReducer(state = initialState, action) {
                 location: [],
                 info: null,
                 success: null,
-                error: action.error
+                error: action.error,
+                totalRecords: 0
             });
         case DELETE_LOCATION:
             return Object.assign({}, state, {
@@ -96,7 +106,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: true,
                 error: null,
                 info: null,
-                success: null
+                success: null,
+                totalRecords: 0
             });
         case DELETE_LOCATION_SUCCESS:
             return Object.assign({}, state, {
@@ -104,7 +115,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: false,
                 error: null,
                 info: action.info || null,
-                success: action.success
+                success: action.success,
+                totalRecords: 0
             });
         case DELETE_LOCATION_ERROR:
             return Object.assign({}, state, {
@@ -113,7 +125,8 @@ export default function locationReducer(state = initialState, action) {
                 location: [],
                 success: null,
                 info: null,
-                error: action.error
+                error: action.error,
+                totalRecords: 0
             });
         case DELETE_MULTI_LOCATION:
             return Object.assign({}, state, {
@@ -122,7 +135,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: true,
                 error: null,
                 info: null,
-                success: null
+                success: null,
+                totalRecords: 0
             });
         case DELETE_MULTI_LOCATION_SUCCESS:
             return Object.assign({}, state, {
@@ -130,7 +144,8 @@ export default function locationReducer(state = initialState, action) {
                 isLoading: false,
                 error: null,
                 info: action.info || null,
-                success: action.success
+                success: action.success,
+                totalRecords: 0
             });
         case DELETE_MULTI_LOCATION_ERROR:
             return Object.assign({}, state, {
@@ -139,7 +154,8 @@ export default function locationReducer(state = initialState, action) {
                 location: [],
                 success: null,
                 info: null,
-                error: action.error
+                error: action.error,
+                totalRecords: 0
             });
         case CUSTOM_INFO_MESSAGE:
             return Object.assign({}, state, {

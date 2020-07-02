@@ -1,28 +1,6 @@
 export let sortFieldType = null;
+export let reversed = "";
 
-/**
- * sort types constants
- */
-export const sortTypes = {
-    asc: {
-        class: 'sort-up',
-        fn: (a, b) => {
-            return a[sortFieldType].localeCompare(b[sortFieldType], 'en', { sensitivity: 'base' })
-        }
-    },
-    desc: {
-        class: 'sort-down',
-        fn: (a, b) => {
-            return b[sortFieldType].localeCompare(a[sortFieldType], 'en', { sensitivity: 'base' })
-        }
-    },
-    default: {
-        class: 'sort',
-        fn: (a) => {
-            return a
-        }
-    }
-}
 
 /**
  * 
@@ -80,6 +58,21 @@ export const checkboxAllClick = (event, selectedLocation, locationList, setAllCh
  * @param {sort field} type 
  */
 export const sortBy = (currentSort, list, sortField) => {
-    sortFieldType = sortField;
-    return [...list].sort(sortTypes[currentSort].fn);
+    reversed = currentSort === "asc" ? 1 : (currentSort === "desc" ? -1 : "");
+    return [...list].sort((a, b) => {
+        if(reversed){
+            if(isNaN(a[sortField]) && isNaN(b[sortField])){
+                return reversed * a[sortField].localeCompare(b[sortField])
+            } else {
+                if(currentSort === "asc"){
+                    return a[sortField] - b[sortField]
+                } else {
+                    return b[sortField] - a[sortField]
+                }
+            }
+        } else {
+            return a;
+        }
+    }
+    );
 }

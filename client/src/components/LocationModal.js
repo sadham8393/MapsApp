@@ -135,8 +135,8 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
             const place = await geocode.locate(location);
             const { city, locality, countryName } = place;
             setArea(locality);
-            setCity(city || "-");
-            setCountry(countryName || "-");
+            setCity(city || 'NA');
+            setCountry(countryName || 'NA');
         }
     }
 
@@ -297,7 +297,7 @@ const LocationModal = ({ modalToggle, isModalOpen, addLoc, updateLoc, locationLi
                     </form>
                 </MDBModalBody>
                 <MDBModalFooter>
-                    <MDBBtn color="secondary" onClick={toggle}>Close</MDBBtn>
+                    <MDBBtn color="danger" onClick={toggle}>Close</MDBBtn>
                     <MDBBtn disabled={btnDisabled} color="primary" onClick={handleSave}>Save changes</MDBBtn>
                 </MDBModalFooter>
             </MDBModal>

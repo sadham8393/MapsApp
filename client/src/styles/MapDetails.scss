@@ -11,12 +11,18 @@
             margin-left: 0;
             div[data-test="datatable-table"] {
                 max-height: 60vh;
-                overflow-y: scroll;
+                overflow-y: auto;
             }
             div[data-test="datatable-info"] {
                 text-align: start;
             }
         }
+    }
+
+    div[data-test="table"] {
+        margin-bottom: 10px;
+        max-height: 60vh;
+        overflow-y: auto;
     }
 
     .card-selectAll-div {
@@ -102,6 +108,10 @@
                 position: sticky !important;
                 top: 0;
                 z-index: 2;
+                cursor: pointer;
+                i {
+                    margin-left: 5px;
+                }
             }
         }
         tbody {
@@ -172,8 +182,9 @@
     }
 
     .card-group {
-        max-height: 70vh;
-        overflow-y: scroll;
+        max-height: 55vh;
+        overflow-y: auto;
+        margin-bottom: 10px;
     }
     .card-subtitle {
         font-size: small;
