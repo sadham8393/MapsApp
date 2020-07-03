@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "bigdatacloud-reverse-geocoding": "^0.2.0",
     "bootstrap": "^4.5.0",
+    "element-closest-polyfill": "^1.0.0",
     "google-maps-react": "^2.0.6",
     "lodash": "^4.17.15",
     "mdbreact": "^4.27.0",

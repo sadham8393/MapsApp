@@ -97,41 +97,48 @@ const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
         columns: [
             {
                 header: <input onChange={(e) => allCheckedChangeHandler(e, locationList)} checked={allChecked || false} label=" " type="checkbox" />,
-                sortable: false
+                sortable: false,
+                width:'1%'
             },
             {
                 header: 'Area',
                 field: 'area',
                 sortingOrder: "",
-                sortable: true
+                sortable: true,
+                width:'10%'
             },
             {
                 header: 'Latitude',
                 field: 'latitude',
                 sortingOrder: "",
-                sortable: true
+                sortable: true,
+                width:'10%'
             },
             {
                 header: 'Longitude',
                 field: 'longitude',
                 sortingOrder: "",
-                sortable: true
+                sortable: true,
+                width:'10%'
             },
             {
                 header: 'City',
                 field: 'city',
                 sortingOrder: "",
-                sortable: true
+                sortable: true,
+                width:'10%'
             },
             {
                 header: 'Country',
                 field: 'country',
                 sortingOrder: "",
-                sortable: true
+                sortable: true,
+                width:'10%'
             },
             {
                 header: 'Action',
-                sortable: false
+                sortable: false,
+                width:'1%'
             }
         ],
         rows: locationData.map((item, index) => {

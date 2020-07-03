@@ -14,9 +14,10 @@ const DataTable = ({ data, onSortingChange, sortingField, sortingOrder }) => {
         return (
             <tr>
                 {
-                    item.columns && item.columns.map(({ header, field, sortable }) => {
+                    item.columns && item.columns.map(({ header, field, sortable, width}) => {
                         return <th
                             key={`th-${header}`}
+                            style={{width: width}}
                             onClick={() =>
                                 sortable ? onSortingChange(field) : null
                             }
