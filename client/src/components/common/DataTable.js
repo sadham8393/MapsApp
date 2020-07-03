@@ -25,7 +25,7 @@ const DataTable = ({ data, onSortingChange, sortingField, sortingOrder }) => {
                             {sortingField && sortingField === field && (
                                 <MDBIcon
                                     icon={
-                                        sortingOrder === "asc" ? "caret-down" : (sortingOrder === "desc" ? "caret-up" : "")
+                                        sortingOrder === "asc" ? "arrow-down" : (sortingOrder === "desc" ? "arrow-up" : "")
                                     }
                                 />
                             )}

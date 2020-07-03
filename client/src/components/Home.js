@@ -10,7 +10,7 @@ import Loader from './common/Loader';
 import { MDBBtn } from 'mdbreact';
 import LocationModal from './LocationModal';
 import ConfirmModal from './common/ConfirmModal';
-import { fetchLocation, addLocation, deleteLocation, updateLocation } from '../actions/locationAction';
+import { FETCH_LOCATION, ADD_LOCATION, DELETE_LOCATION, UPDATE_LOCATION } from '../utils/constants';
 
 
 const Home = () => {
@@ -25,13 +25,12 @@ const Home = () => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchLocation());
+        dispatch({type: FETCH_LOCATION});
     }, [dispatch]);
 
     const addLoc = ({ latitude, longitude, area, city, country }) => {
-        dispatch(addLocation({
-            latitude, longitude, area, city, country
-        }));
+        const location = { latitude, longitude, area, city, country };
+        dispatch({type: ADD_LOCATION, location});
     }
 
     const editClick = (loc, editMode) => {
@@ -41,12 +40,12 @@ const Home = () => {
     }
 
     const deleteLoc = (loc) => {
-        dispatch(deleteLocation(loc));
+        dispatch({type: DELETE_LOCATION, location:loc});
         setDeleteBtnDisabled(!deleteBtnDisabled)
     }
 
     const updateLoc = (loc) => {
-        dispatch(updateLocation(loc));
+        dispatch({type: UPDATE_LOCATION, location:loc});
     }
 
     const deleteConfirm = (loc, disabled = true) => {

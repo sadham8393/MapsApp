@@ -8,7 +8,6 @@ import Search from '../components/common/Search';
 
 const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
     const locationList = useSelector(state => state.location.location, shallowEqual);
-
     const [allChecked, setAllChecked] = useState(false);
     let [selectedLocation, setSelectedLocation] = useState([]);
     const [sortingField, setSortingField] = useState("");

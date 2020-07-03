@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Search = ({ onSearch, total = 0, rangeFrom = 0, rangeTo = 0 }) => {
     const [search, setSearch] = useState("");
@@ -19,7 +19,7 @@ const Search = ({ onSearch, total = 0, rangeFrom = 0, rangeTo = 0 }) => {
             {
                 total > 0 &&
                 <div>
-                    Showing <strong> {rangeFrom} - {rangeTo > total ? total : rangeTo} </strong> of <strong>{total}</strong>
+                    Showing <strong> {rangeFrom}{rangeFrom === total ? '' : (rangeTo > total ? `- ${total}` : `- ${rangeTo}`)} </strong> of <strong>{total}</strong>
                 </div>
             }
         </div>

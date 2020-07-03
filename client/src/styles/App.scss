@@ -15,6 +15,17 @@
 
 .home-nav-container {
   text-align: right;
+  position: absolute;
+  top: 8px;
+  right: 0px;
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
 }
 
 .display-block {

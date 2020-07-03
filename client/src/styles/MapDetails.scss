@@ -20,6 +20,8 @@
     }
 
     div[data-test="table"] {
+        padding-left: 15px;
+        padding-right: 15px;
         margin-bottom: 10px;
         max-height: 60vh;
         overflow-y: auto;
@@ -62,7 +64,7 @@
         list-style-type: none;
         display: inline-flex;
         align-self: flex-end;
-        margin-bottom: 0;
+        margin-bottom: 5px;
         .nav-link {
             cursor: pointer;
         }
