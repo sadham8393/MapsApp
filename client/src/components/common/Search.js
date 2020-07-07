@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 const Search = ({ onSearch, total = 0, rangeFrom = 0, rangeTo = 0 }) => {
     const [search, setSearch] = useState("");
-
+    const { t } = useTranslation();
     const onInputChange = value => {
         setSearch(value);
         onSearch(value);
@@ -11,17 +12,11 @@ const Search = ({ onSearch, total = 0, rangeFrom = 0, rangeTo = 0 }) => {
         <div className="search-div">
             <input
                 type="text"
-                placeholder="Search"
+                placeholder={t("search")}
                 className="form-control"
                 value={search}
                 onChange={e => onInputChange(e.target.value)}
             />
-            {
-                total > 0 &&
-                <div>
-                    Showing <strong> {rangeFrom}{rangeFrom === total ? '' : (rangeTo > total ? `- ${total}` : `- ${rangeTo}`)} </strong> of <strong>{total}</strong>
-                </div>
-            }
         </div>
     );
 };

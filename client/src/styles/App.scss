@@ -18,6 +18,9 @@
   position: absolute;
   top: 8px;
   right: 0px;
+  .btn{
+    margin-left: 10px;
+  }
 }
 
 .navbar-nav {
@@ -141,6 +144,12 @@ body.modal-open {
   justify-content: space-between;
   padding-right: 15px;
   padding-left: 15px;
+  .pagination-select{
+    display: flex;
+    select{
+      margin-right: 10px;
+    }
+  }
 }
 .pagination a {
   color: black;

@@ -1,10 +1,12 @@
 import React from 'react';
 import AlgoliaPlaces from 'algolia-places-react';
+import { useTranslation } from "react-i18next";
 
 export default ({ handleAutoComplete }) => {
+    const { t } = useTranslation();
     return (
         <AlgoliaPlaces
-            placeholder='Write an address here'
+            placeholder={t('writeAddress')}
             options={{
                 appId: process.env.REACT_ALGOLIA_APPLICATION_ID,
                 apiKey: process.env.REACT_ALGOLIA_PLACES_USAGE_API_KEY,

@@ -28,22 +28,7 @@ const AlertPage = () => {
       </MDBAlert>
     )
   }
-
-  /* if (info) {
-    return (
-      <MDBAlert color="warning" onClose={onClose} dismiss>
-        {info}
-      </MDBAlert>
-    )
-  }
-
-  if (success) {
-    return (
-      <MDBAlert color="success" onClose={onClose} dismiss>
-        {success}
-      </MDBAlert>
-    )
-  } */
+  
   return "";
 };
 

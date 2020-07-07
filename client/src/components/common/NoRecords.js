@@ -1,9 +1,11 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 let NoRecords = () => {
+    const { t } = useTranslation();
     return (
         <div className="norecords-div">
-            No Records to display. Add new location
+            {t('noRecordsMessage')}
         </div>
     )
 }

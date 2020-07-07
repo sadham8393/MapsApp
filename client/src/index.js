@@ -4,7 +4,7 @@ import 'element-closest-polyfill';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
@@ -13,11 +13,14 @@ import App from './App';
 import { HashRouter } from 'react-router-dom';
 
 import store from './store';
+import "./i18n";
 
 const app = (
     <Provider store={store}>
         <HashRouter>
-            <App />
+            <Suspense fallback={<div>Loading...</div>}>
+                <App />
+            </Suspense>
         </HashRouter>
     </Provider>
 );

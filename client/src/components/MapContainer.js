@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import { useSelector, shallowEqual } from 'react-redux';
+import { useTranslation } from "react-i18next";
 
 const MapContainer = (props) => {
     const [selectedMarker, setSelectedMarker] = useState({
@@ -8,6 +9,8 @@ const MapContainer = (props) => {
     });
     const [activeMarker, setActiveMarker] = useState(null);
     const [infoOpen, setInfoOpen] = useState(false);
+
+    const { t } = useTranslation();
 
     const locationList = useSelector(state => state.location.location, shallowEqual);
 
@@ -60,8 +63,8 @@ const MapContainer = (props) => {
                 <InfoWindow marker={activeMarker} visible={infoOpen} onClose={handleWindowClose} >
                     <div>
                         <h2>{selectedMarker.position.area}</h2>
-                        <h3>Latitude: {selectedMarker.position.latitude}</h3>
-                        <h3>Longitude: {selectedMarker.position.longitude}</h3>
+                        <h3>{t('latitude')}: {selectedMarker.position.latitude}</h3>
+                        <h3>{t('longitude')}: {selectedMarker.position.longitude}</h3>
                     </div>
                 </InfoWindow>
             }

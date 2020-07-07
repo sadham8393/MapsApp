@@ -1,9 +1,14 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 
-const NotFound = () =>
-  <div>
-    <h3>404 page not found</h3>
-    <p>We are sorry but the page you are looking for does not exist.</p>
-  </div>
+const NotFound = () => {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <h3>{t('pageNotFound')}</h3>
+      <p>{t('pageNotFoundMessage')}</p>
+    </div>
+  )
+}
 
 export default NotFound;

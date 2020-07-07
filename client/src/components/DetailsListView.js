@@ -4,6 +4,8 @@ import { singleCheckClick, checkboxAllClick, sortBy } from '../utils/utilities';
 import { useSelector, shallowEqual } from 'react-redux';
 import Pagination from '../components/common/Pagination';
 import Search from '../components/common/Search';
+import { useTranslation } from "react-i18next";
+import NoRecords from './common/NoRecords';
 
 const DetailsListView = ({ deleteConfirm, editClick, multiDelete }) => {
     const locationList = useSelector(state => state.location.location, shallowEqual);
@@ -19,6 +21,7 @@ const DetailsListView = ({ deleteConfirm, editClick, multiDelete }) => {
     const [rangeFrom, setRangeFrom] = useState(0);
     const [rangeTo, setRangeTo] = useState(0);
 
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (locationList.length > 0 && itemsPerPage > 0) {
@@ -95,75 +98,59 @@ const DetailsListView = ({ deleteConfirm, editClick, multiDelete }) => {
                     setSearch(value);
                     setCurrentPage(1);
                 }}
-                rangeFrom={rangeFrom}
-                rangeTo={rangeTo}
-                total={totalCount}
             />
             {
-                totalCount > 0 &&
-
-                <div className="card-selectAll-div custom-control custom-checkbox">
-
-                    <div className="checkbox-div">
-                        <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
-                        <label htmlFor="defaultUnchecked">Select All</label>
-                    </div>
-
-                    <div className="sort-div">
-                        <label htmlFor="sortBy">Sory By</label>
-                        <select id="sortBy" onChange={sortChange}>
-                            <option value="default">Default</option>
-                            <option value="asc">Ascending</option>
-                            <option value="desc">Descending</option>
-                        </select>
-                    </div>
-
-                </div>
-            }
-
-            <MDBCardGroup>
-                {
-                    locationData.map((item, index) => {
-                        return (
-                            <MDBCol key={`card-${index}`} xs="12" sm="6" md="4" lg="3">
-                                <MDBCard>
-                                    <MDBCardBody>
-                                        <div className="card-checkbox-div">
-                                            <input type="checkbox" checked={allChecked ? allChecked : item.checked ? item.checked : false} onChange={(e) => checkBoxClick(e, item, locationList)} />
-                                            <MDBCardTitle>{item.area}</MDBCardTitle>
-                                            <div></div>
-                                        </div>
-                                        <MDBCardText><strong>Latitude :</strong> {item.latitude}</MDBCardText>
-                                        <MDBCardText><strong>Longtitude :</strong> {item.longitude}</MDBCardText>
-                                        <MDBCardText><strong>City :</strong> {item.city}</MDBCardText>
-                                        <MDBCardText><strong>Country :</strong> {item.country}</MDBCardText>
-                                        <MDBBtn color="primary" onClick={(e) => editClick(item)}>Edit</MDBBtn>
-                                        <MDBBtn color="danger" onClick={(e) => deleteConfirm(item)}>Delete</MDBBtn>
-                                    </MDBCardBody>
-                                </MDBCard>
-                            </MDBCol>
-                        )
-                    })
-                }
-            </MDBCardGroup>
-            <div className="pagination-div">
-                {
-                    totalCount > 0 &&
+                totalCount > 0 ?
                     <>
-                        <select onChange={showChange} className="browser-default custom-select">
+                        <div className="card-selectAll-div custom-control custom-checkbox">
+
+                            <div className="checkbox-div">
+                                <input type="checkbox" id="defaultUnchecked" checked={allChecked || false} onChange={(e) => allCheckedChangeHandler(e, locationList)}></input>
+                                <label htmlFor="defaultUnchecked">{t('selectAll')}</label>
+                            </div>
+
+                            <div className="sort-div">
+                                <label htmlFor="sortBy">Sory By</label>
+                                <select id="sortBy" onChange={sortChange}>
+                                    <option value="default">{t('default')}</option>
+                                    <option value="asc">{t('asc')}</option>
+                                    <option value="desc">{t('desc')}</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <MDBCardGroup>
                             {
-                                [5, 10, 50, 100].map(item => {
-                                    return <option key={`option-${item}`} value={item}>{item}</option>
+                                locationData.map((item, index) => {
+                                    return (
+                                        <MDBCol key={`card-${index}`} xs="12" sm="6" md="4" lg="3">
+                                            <MDBCard>
+                                                <MDBCardBody>
+                                                    <div className="card-checkbox-div">
+                                                        <input type="checkbox" checked={allChecked ? allChecked : item.checked ? item.checked : false} onChange={(e) => checkBoxClick(e, item, locationList)} />
+                                                        <MDBCardTitle>{item.area}</MDBCardTitle>
+                                                        <div></div>
+                                                    </div>
+                                                    <MDBCardText><strong>{t('latitude')} :</strong> {item.latitude}</MDBCardText>
+                                                    <MDBCardText><strong>{t('longitude')} :</strong> {item.longitude}</MDBCardText>
+                                                    <MDBCardText><strong>{t('city')} :</strong> {item.city}</MDBCardText>
+                                                    <MDBCardText><strong>{t('country')} :</strong> {item.country}</MDBCardText>
+                                                    <MDBBtn color="primary" onClick={(e) => editClick(item)}>{t('edit')}</MDBBtn>
+                                                    <MDBBtn color="danger" onClick={(e) => deleteConfirm(item)}>{t('delete')}</MDBBtn>
+                                                </MDBCardBody>
+                                            </MDBCard>
+                                        </MDBCol>
+                                    )
                                 })
                             }
-                        </select>
-                        {
-                            totalPages > 1 &&
-                            <Pagination totalCount={totalCount} itemsPerPage={itemsPerPage} currentPage={currentPage} handlePageChange={handlePageChange} />
-                        }
+                        </MDBCardGroup>
+                        <Pagination totalCount={totalCount} itemsPerPage={itemsPerPage} currentPage={currentPage}
+                            rangeFrom={rangeFrom} rangeTo={rangeTo} totalPages={totalPages}
+                            handlePageChange={handlePageChange} showChange={showChange} />
                     </>
-                }
-            </div>
+                    :
+                    <NoRecords />
+            }
         </div>
 
     )

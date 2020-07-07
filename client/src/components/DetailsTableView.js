@@ -5,6 +5,7 @@ import NoRecords from './common/NoRecords';
 import { useSelector, shallowEqual } from 'react-redux';
 import Pagination from '../components/common/Pagination';
 import Search from '../components/common/Search';
+import { useTranslation } from "react-i18next";
 
 const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
     const locationList = useSelector(state => state.location.location, shallowEqual);
@@ -12,7 +13,6 @@ const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
     let [selectedLocation, setSelectedLocation] = useState([]);
     const [sortingField, setSortingField] = useState("");
     const [sortingOrder, setSortingOrder] = useState("default");
-
     const [itemsPerPage, setItemsPerPage] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -20,7 +20,7 @@ const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
     const [totalCount, setTotalCount] = useState(0);
     const [rangeFrom, setRangeFrom] = useState(0);
     const [rangeTo, setRangeTo] = useState(0);
-
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (locationList.length > 0 && itemsPerPage > 0) {
@@ -98,47 +98,47 @@ const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
             {
                 header: <input onChange={(e) => allCheckedChangeHandler(e, locationList)} checked={allChecked || false} label=" " type="checkbox" />,
                 sortable: false,
-                width:'1%'
+                width: '1%'
             },
             {
-                header: 'Area',
+                header: t('area'),
                 field: 'area',
                 sortingOrder: "",
                 sortable: true,
-                width:'10%'
+                width: '10%'
             },
             {
-                header: 'Latitude',
+                header: t('latitude'),
                 field: 'latitude',
                 sortingOrder: "",
                 sortable: true,
-                width:'10%'
+                width: '10%'
             },
             {
-                header: 'Longitude',
+                header: t('longitude'),
                 field: 'longitude',
                 sortingOrder: "",
                 sortable: true,
-                width:'10%'
+                width: '10%'
             },
             {
-                header: 'City',
+                header: t('city'),
                 field: 'city',
                 sortingOrder: "",
                 sortable: true,
-                width:'10%'
+                width: '10%'
             },
             {
-                header: 'Country',
+                header: t('country'),
                 field: 'country',
                 sortingOrder: "",
                 sortable: true,
-                width:'10%'
+                width: '10%'
             },
             {
-                header: 'Action',
+                header: t('action'),
                 sortable: false,
-                width:'1%'
+                width: '1%'
             }
         ],
         rows: locationData.map((item, index) => {
@@ -158,36 +158,26 @@ const DetailsTableView = ({ deleteConfirm, editClick, multiDelete }) => {
         })
     }
     return (
+        <>
+            <Search
+                onSearch={value => {
+                    setSearch(value);
+                    setCurrentPage(1);
+                }}
+            />
+            {
+                totalCount > 0 ?
+                    <>
+                        <DataTable data={data} onSortingChange={onSortingChange} sortingField={sortingField} sortingOrder={sortingOrder} />
+                        <Pagination totalCount={totalCount} itemsPerPage={itemsPerPage} currentPage={currentPage}
+                            rangeFrom={rangeFrom} rangeTo={rangeTo} totalPages={totalPages}
+                            handlePageChange={handlePageChange} showChange={showChange} />
+                    </>
 
-        totalCount > 0 ?
-            <>
-                <Search
-                    onSearch={value => {
-                        setSearch(value);
-                        setCurrentPage(1);
-                    }}
-                    rangeFrom={rangeFrom}
-                    rangeTo={rangeTo}
-                    total={totalCount}
-                />
-                <DataTable data={data} onSortingChange={onSortingChange} sortingField={sortingField} sortingOrder={sortingOrder} />
-                <div className="pagination-div">
-                    <select onChange={showChange} className="browser-default custom-select">
-                        {
-                            [5, 10, 50, 100].map(item => {
-                                return <option key={`option-${item}`} value={item}>{item}</option>
-                            })
-                        }
-                    </select>
-                    {
-                        totalPages > 1 &&
-                        <Pagination totalCount={totalCount} itemsPerPage={itemsPerPage} currentPage={currentPage} handlePageChange={handlePageChange} />
-                    }
-                </div>
-            </>
-
-            :
-            <NoRecords />
+                    :
+                    <NoRecords />
+            }
+        </>
     );
 }
 
