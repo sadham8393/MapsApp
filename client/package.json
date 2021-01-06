@@ -7,7 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "algolia-places-react": "^1.5.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bigdatacloud-reverse-geocoding": "^0.2.0",
     "bootstrap": "^4.5.0",
     "element-closest-polyfill": "^1.0.0",
